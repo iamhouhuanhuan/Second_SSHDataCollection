@@ -16,18 +16,12 @@ import ch.ethz.ssh2.StreamGobbler;
 public class StopLog {
     public void stopLog() {
 
-
-        String hostname = "192.168.1.112";
-        String username = "luxiang";
-        String password = "root";
-
         try {
             // create a connection instance and connect to it
-            Connection ssh = new Connection(hostname);
-
+            Connection ssh = new Connection(MainActivity.hostname);
             ssh.connect();
-            boolean authorized = ssh.authenticateWithPassword(username,
-                    password);
+            boolean authorized = ssh.authenticateWithPassword(MainActivity.username,
+                    MainActivity.password);
             if (authorized == false)
                 throw new IOException(
                         "Could not authenticate connection, please try again.");
@@ -36,25 +30,25 @@ public class StopLog {
             Session session = ssh.openSession();
             session.execCommand("sudo kill -s 9 `ps -ef|grep '../netlink/log_to_file'|grep -v sudo|grep -v grep|awk '{print $2}'`");
 
-            System.out.println("Here is some information about the remote host:");
+            //System.out.println("Here is some information about the remote host:");
 
             /*
              * This basic example does not handle stderr, which is sometimes dangerous
              * (please read the FAQ).
              */
             //接收目标服务器上的控制台返回结果,输出结果。
-            InputStream stdout = new StreamGobbler(session.getStdout());
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(stdout));
-
-            while (true)
-            {
-                String line = br.readLine();
-                if (line == null)
-                    break;
-                System.out.println(line);
-
-            }
+//            InputStream stdout = new StreamGobbler(session.getStdout());
+//
+//            BufferedReader br = new BufferedReader(new InputStreamReader(stdout));
+//
+//            while (true)
+//            {
+//                String line = br.readLine();
+//                if (line == null)
+//                    break;
+//                System.out.println(line);
+//
+//            }
 
             /* Show exit status, if available (otherwise "null") */
             //得到脚本运行成功与否的标志 ：0－成功 非0－失败
@@ -69,6 +63,5 @@ public class StopLog {
             System.out.println(e.getMessage());
             //System.exit(2);
         }
-
     }
 }
