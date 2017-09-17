@@ -34,10 +34,19 @@
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20pt"
+            android:gravity="center_horizontal"
+            android:textColor="@color/colorAccent"
+            android:id="@+id/time"/>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="center">
 
             <ImageButton
                 android:id="@+id/button_start"
@@ -63,8 +72,8 @@
 
         <ImageButton
             android:id="@+id/quit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="200px"
+            android:layout_height="100px"
             android:layout_gravity="center"
             android:background="@color/colorWhite"
             android:src="@drawable/quit"

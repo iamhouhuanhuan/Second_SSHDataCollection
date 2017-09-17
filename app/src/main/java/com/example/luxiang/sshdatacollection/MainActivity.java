@@ -13,14 +13,16 @@ public class MainActivity extends Activity {
     EditText editText;
     ImageButton finishButton;
     TextView text;
+    TextView time;
     ImageButton startButton;
-    Log logData = new Log();
+    StartLog startLogData = new StartLog();
     StopLog stop = new StopLog();
     public static int clickNum = 0;
     public static String suffix = ".dat";
     public static String hostname = "192.168.1.112";
     public static String username = "luxiang";
     public static String password = "root";
+    int timer = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +32,13 @@ public class MainActivity extends Activity {
         startButton = (ImageButton) findViewById(R.id.button_start);
         finishButton = (ImageButton) findViewById(R.id.button_finish);
         text = (TextView) findViewById(R.id.text);
+        time = (TextView) findViewById(R.id.time);
+
     }
 
     public void startCollection(View v) {
-
+        timer = 0;
+        time.setVisibility(View.VISIBLE);
         String txtResult;
 
         if (editText.getText().toString().equals("")) {
@@ -47,15 +52,37 @@ public class MainActivity extends Activity {
             text.setTextColor(Color.BLACK);
         }
 
+        new Thread() {
+            public void run() {
+                //这儿是耗时操作，完成之后更新UI；
+                while (timer >= 0) {
+                    timer++;
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //更新UI
+                            time.setText(timer + "s");
+                        }
+                    });
+                }
+            }
+        }.start();
+
         new Thread(new Runnable() {
             @Override
             public void run() {
-                logData.sshConnect(editText.getText().toString());
+                startLogData.sshConnect(editText.getText().toString());
             }
         }).start();
     }
 
     public void stopCollection(View v) {
+        time.setVisibility(View.INVISIBLE);
         String txtResult;
         if (editText.getText().toString().equals("")) {
             txtResult = "Please click the start button to log!";

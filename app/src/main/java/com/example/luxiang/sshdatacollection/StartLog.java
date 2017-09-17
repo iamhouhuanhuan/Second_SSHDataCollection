@@ -5,21 +5,19 @@ package com.example.luxiang.sshdatacollection;
  */
 
 import android.graphics.Color;
-
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
 import ch.ethz.ssh2.StreamGobbler;
 import ch.ethz.ssh2.Connection;
 import ch.ethz.ssh2.Session;
 
 import java.io.IOException;
 
-public class Log {
+class StartLog {
 
 
-    public void sshConnect(String filename) {
+ void sshConnect(String filename) {
 //
         try {
             // create a connection instance and connect to it
@@ -27,7 +25,7 @@ public class Log {
             ssh.connect();
             boolean authorized = ssh.authenticateWithPassword(MainActivity.username,
                     MainActivity.password);
-            if (authorized == false)
+            if (!authorized)
                 throw new IOException(
                         "Could not authenticate connection, please try again.");
 

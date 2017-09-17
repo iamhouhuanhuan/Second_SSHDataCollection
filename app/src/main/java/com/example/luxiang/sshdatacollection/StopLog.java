@@ -13,8 +13,8 @@ import ch.ethz.ssh2.Connection;
 import ch.ethz.ssh2.Session;
 import ch.ethz.ssh2.StreamGobbler;
 
-public class StopLog {
-    public void stopLog() {
+class StopLog {
+    void stopLog() {
 
         try {
             // create a connection instance and connect to it
@@ -22,7 +22,7 @@ public class StopLog {
             ssh.connect();
             boolean authorized = ssh.authenticateWithPassword(MainActivity.username,
                     MainActivity.password);
-            if (authorized == false)
+            if (!authorized)
                 throw new IOException(
                         "Could not authenticate connection, please try again.");
 
