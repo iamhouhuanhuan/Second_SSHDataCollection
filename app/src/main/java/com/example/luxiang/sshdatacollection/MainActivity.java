@@ -14,7 +14,7 @@ public class MainActivity extends Activity {
     EditText editText;
     Button startButton;
     Button finishButton;
-    TextView text;
+    public static TextView text;
     Log logData = new Log();
     StopLog stop = new StopLog();
 
@@ -67,5 +67,9 @@ public class MainActivity extends Activity {
         }
         text.setText("Finish, please next one.");
         text.setTextColor(Color.GREEN);
+    }
+
+    public void setTextValue(String s){
+        text.setText(s);
     }
 }
